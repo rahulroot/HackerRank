@@ -2,32 +2,45 @@
 #include <bitset>
 #include <limits.h>
 #include <vector>
-const long long int my_max = 2147483648;
+#include <fstream>
+#include <assert.h>
+const unsigned long int my_max = 2147483648;
 using namespace std;
-
+ 
 int main()
 {
-	int n, s, p, q;
-	cin >> n >> s >> p >> q;
-	bool* a = new bool[n];	
+  unsigned long int n, s, p, q;
+  cin >> n >> s >> p >> q;
+  unsigned long int a[3];
+  
+  unsigned long long my_mul = 0;
+  unsigned long my_div = 0;
+  
+  bitset<my_max> *ba = new bitset<my_max>();
+ 
+  a[0] = s%my_max;
+  ba->set(a[0],true);
+  for(unsigned int i=1; (i<n); ++i)
+  {
+    my_mul = (unsigned long long)(a[0]*p+q);
+    
+    my_div = (unsigned long)(my_mul%my_max);
+    a[1] = (unsigned long)(my_div);
 
-	int ad = my_max-1;
-	a[0] = s & ad;
-	for(int i =1; i <= n-1; ++i)
-	{
-		long div = q & ad;
-		long mul = (long)a[i-1]*p;
-		a[i] = mul+div;
-		cout <<"Generatng : " << mul+div << endl;
-	}
-
-	int count = 0;
-	for(int i = 0; i < n; ++i)
-		if(a[i]) count++;
-
-	cout << count << endl;
-
-	delete []a;
-	
-	return 0;
+    ba->set(a[1],true);
+ 
+    if (a[0] == a[1])
+		{
+    	break;
+		}
+    else
+    	a[0] = a[1];
+ 
+  }
+  
+  cout << ba->count() << endl;
+  
+  delete ba;
+  
+  return 0;
 }
