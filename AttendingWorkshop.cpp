@@ -35,26 +35,26 @@ Available_Workshops* initialize(int st_time[], int dur[], int n)
 
 bool compare_on_st(const Workshop &lh, const Workshop &rh)
 {
-	return lh.start_time < rh.start_time;
+	return lh.end_time < rh.end_time;
 }
 
 int CalculateMaxWorkshops(Available_Workshops *ptr)
 {
-	/*
+	
 	vector<Workshop> vs;
 	for(int i = 0; i < ptr->total; ++i)
 		vs.push_back(ptr->workshop[i]);
 
 	stable_sort(vs.begin(), vs.end(), compare_on_st);
-	*/
+	
 
-  int count = 1;
 	int ret_max = 0;
 	for(int i = 0; i < ptr->total-2; ++i)
 	{
-		for(int j = i+1; j < ptr->total-1; ++j)
+		int max = 0;
+		for(int j = i; j < ptr->total-1; ++j)
 		{
-			if(ptr->workshop[i].end_time < ptr->workshop[j].start_time)
+			if(ptr->workshop[j].end_time < ptr->workshop[j+1].start_time)
 			{
 				count++;
 			}
